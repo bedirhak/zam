@@ -51,10 +51,47 @@
             font-size: 1rem;
             color: #bdbdbd;
         }
+
+        /* Kabarcıklar için stil */
+        .bubbles {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: 0;
+            border-radius: 50%;
+            opacity: 0.7;
+            background: radial-gradient(circle at 30% 30%, #e0f7fa 70%, #b2ebf2 100%);
+            animation: rise 4s linear infinite;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0.7;
+            }
+
+            80% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-100vh) scale(1.2);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
 <body>
+    <div class="bubbles" id="bubbles"></div>
     <h1>31 Ağustos Geri Sayım</h1>
     <div class="countdown" id="countdown">
         <div class="countdown-item">
@@ -100,6 +137,31 @@
 
         updateCountdown();
         setInterval(updateCountdown, 1000);
+
+        // Kabarcık animasyonu
+        const bubblesContainer = document.getElementById('bubbles');
+        function createBubble() {
+            const bubble = document.createElement('div');
+            bubble.classList.add('bubble');
+            // Rastgele boyut ve konum
+            const size = Math.random() * 24 + 16; // 16-40px
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+            bubble.style.left = `${Math.random() * 100}%`;
+            bubble.style.animationDuration = `${2.5 + Math.random() * 2.5}s`;
+            bubble.style.opacity = 0.5 + Math.random() * 0.5;
+            bubblesContainer.appendChild(bubble);
+            // Kabarcık yukarı çıkınca silinsin
+            bubble.addEventListener('animationend', () => {
+                bubble.remove();
+            });
+        }
+        setInterval(() => {
+            // Aynı anda birkaç kabarcık çıkabilir
+            for (let i = 0; i < Math.random() * 2 + 1; i++) {
+                createBubble();
+            }
+        }, 500);
     </script>
 </body>
 
