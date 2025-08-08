@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zam Geri Sayım</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #232526, #414345);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 2rem;
+            font-size: 2rem;
+        }
+
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .countdown-item span {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .label {
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            color: #bdbdbd;
+        }
+
+        .footer {
+            margin-top: 2rem;
+            font-size: 1rem;
+            color: #bdbdbd;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>31 Ağustos Zam Geri Sayım</h1>
+    <div class="countdown" id="countdown">
+        <div class="countdown-item">
+            <span id="days">0</span>
+            <div class="label">Gün</div>
+        </div>
+        <div class="countdown-item">
+            <span id="hours">0</span>
+            <div class="label">Saat</div>
+        </div>
+        <div class="countdown-item">
+            <span id="minutes">0</span>
+            <div class="label">Dakika</div>
+        </div>
+        <div class="countdown-item">
+            <span id="seconds">0</span>
+            <div class="label">Saniye</div>
+        </div>
+    </div>
+    <div class="footer">31 Ağustos sabahı 00:15'te zam alıp almayacağımız belli olacak.</div>
+    <script>
+        function updateCountdown() {
+            // Hedef tarih: 31 Ağustos 2025, 00:15:00
+            const targetDate = new Date('2025-08-31T00:15:00+03:00');
+            const now = new Date();
+            const diff = targetDate - now;
+
+            if (diff <= 0) {
+                document.getElementById('countdown').innerHTML = '<span style="font-size:2rem;">Zam zamanı geldi!</span>';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+
+</html>
